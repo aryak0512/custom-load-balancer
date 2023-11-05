@@ -1,7 +1,7 @@
 
-# Custom Web server
+# Custom Load Balancer
 
-This is a pure Java implementation of a multithreaded web server written by me from scratch which can serve 10 concurrent requests. This project uses the socket programming Java API from the java.net package
+This is a pure Java implementation of a multithreaded Custom Load Balancer written by me from scratch which can serve 10 concurrent requests. The LB uses socket programming Java API & operates on the Round Robin algoritms by using a daemon thread that makes health checks using HTTP calls to instances on a fixed interval
 
 ## Demo
 

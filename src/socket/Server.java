@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +18,6 @@ public class Server {
 
 	public static void main(String[] args) throws Exception {
 
-		Server s = new Server();
 		// server will listen to client requests on this port
 		ServerSocket serverSocket = new ServerSocket(7200);
 
@@ -32,10 +30,8 @@ public class Server {
 		t.start();
 
 		LoggerUtils.log("Server is ready to accept requests on port 7200...");
-		System.out.println(s.instances);
+		System.out.println(instances);
 
-		// populating product hashmap
-		ProductService ps = new ProductService();
 		ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 		while (true) {

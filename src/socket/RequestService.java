@@ -1,9 +1,7 @@
 package socket;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Scanner;
 
 import utils.LoggerUtils;
 
@@ -36,17 +34,6 @@ public class RequestService {
 			out.write("ContentType: text/html".getBytes());
 			out.write("\r\n".getBytes());
 
-			Scanner scanner = null;
-
-			// reading file to to sent as response
-			scanner = mapping.equals("/signup") ? new Scanner(new File("webpages/form.html"))
-					: new Scanner(new File("webpages/index.html"));
-
-			String htmlString = scanner.useDelimiter("\\Z").next();
-			scanner.close();
-			out.write(htmlString.getBytes("UTF-8"));
-
-			out.write("\r\n\r\n".getBytes());
 			out.flush();
 
 		} catch (Exception e) {

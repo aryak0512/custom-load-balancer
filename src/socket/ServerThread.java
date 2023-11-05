@@ -24,26 +24,12 @@ public class ServerThread implements Runnable {
 			InputStream in = socket.getInputStream();
 			// for sending response to client
 			OutputStream out = socket.getOutputStream();
-
-			// reading input sent by client
-			/*
-			 * byte[] input = new byte[1024]; in.read(input);
-			 * 
-			 * String id = new String(input);
-			 * 
-			 * int productId = Integer.parseInt(id.trim());
-			 * 
-			 * Object response = ProductService.getProduct((long) productId);
-			 */
-			// sending output back to client
-			// out.write(ByteObjectConverter.objectToByte(response));
-
 			RequestService handler = new RequestService();
 			handler.submit(in, out);
 			socket.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LoggerUtils.log("ERROR :" + e.getLocalizedMessage());
 		}
 	}
 

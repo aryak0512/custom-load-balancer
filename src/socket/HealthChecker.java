@@ -1,11 +1,14 @@
 package socket;
 
 import java.util.Map.Entry;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 
-import utils.LoggerUtils;
-
+/**
+ * 
+ * This thread will make HTTP calls to back-end server instances & monitor
+ * health at configured frequency
+ * 
+ **/
 public class HealthChecker implements Runnable {
 
 	@Override
@@ -14,28 +17,18 @@ public class HealthChecker implements Runnable {
 		while (true) {
 
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(Constants.SLEEP);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-			// start the monitor thread
 
 			CyclicBarrier cb = new CyclicBarrier(Server.instances.size());
 
 			for (Entry<String, Boolean> e : Server.instances.entrySet()) {
 
-				String instance = e.getKey();
-				Callable<Boolean> c = new HealthCheckService(instance);
-				try {
-					
-					boolean ans = c.call();
-					LoggerUtils.log("Checking heartbeat of instance : " + instance + " | ACTIVE : " + ans);
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				Thread t = new Thread(new Task(e.getKey(), cb));
+				t.setName("HTTP-" + e.getKey());
+				t.start();
 
 			}
 
